@@ -45,8 +45,9 @@ AWS Diagram:
 
 My LAB:
 <img src="./my-lab-diagram.png" alt="My VMware LAB Diagram">
----
 
+
+--- 
 <h2 id="step-2">2. Create an EC2 Instance in your default AWS VPC</h2>
 
 Deploy a small EC2 instance (e.g., t2.micro) within your **Default VPC**. This instance will act as the external "Internet" client to probe your home/office network.
@@ -88,34 +89,24 @@ Access your service provider router (my case at `192.168.0.1`) and navigate to t
 </table>
 
 My router TP-Link DECO example:
-<div style="display: flex; flex-direction: row; flex-wrap: nowrap; gap: 10px; justify-content: space-between;">
-    <div style="position: relative; width: 16%;">
-        <div style="position: absolute; top: 4px; left: 4px; background-color: #232f3e; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; z-index: 1;">01</div>
-        <img src="./router-screen1.png" alt="Screen 1" style="width: 100%; border-radius: 5px; display: block;">
-    </div>
-    <div style="position: relative; width: 16%;">
-        <div style="position: absolute; top: 4px; left: 4px; background-color: #232f3e; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; z-index: 1;">02</div>
-        <img src="./router-screen2.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;">
-    </div>
-    <div style="position: relative; width: 16%;">
-        <div style="position: absolute; top: 4px; left: 4px; background-color: #232f3e; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; z-index: 1;">03</div>
-        <img src="./router-screen3.png" alt="Screen 3" style="width: 100%; border-radius: 5px; display: block;">
-    </div>
-    <div style="position: relative; width: 16%;">
-        <div style="position: absolute; top: 4px; left: 4px; background-color: #232f3e; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; z-index: 1;">04</div>
-        <img src="./router-screen4.png" alt="Screen 4" style="width: 100%; border-radius: 5px; display: block;">
-    </div>
-    <div style="position: relative; width: 16%;">
-        <div style="position: absolute; top: 4px; left: 4px; background-color: #232f3e; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; z-index: 1;">05</div>
-        <img src="./router-screen5.png" alt="Screen 5" style="width: 100%; border-radius: 5px; display: block;">
-    </div>
-    <div style="position: relative; width: 16%;">
-        <div style="position: absolute; top: 4px; left: 4px; background-color: #232f3e; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; z-index: 1;">06</div>
-        <img src="./router-screen6.png" alt="Screen 6" style="width: 100%; border-radius: 5px; display: block;">
-    </div>
-</div>
-
-
+<table>
+  <tr>
+    <th>01</th>
+    <th>02</th>
+    <th>03</th>
+    <th>04</th>
+    <th>05</th>
+    <th>06</th>  
+  </tr>
+  <tr>
+    <td><img src="./router-screen1.png" alt="Screen 1" style="width: 100%; border-radius: 5px; display: block;"></td>
+    <td><img src="./router-screen2.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
+    <td><img src="./router-screen3.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
+    <td><img src="./router-screen4.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
+    <td><img src="./router-screen5.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
+    <td><img src="./router-screen6.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
+  </tr>
+</table>
 
 ---
 
