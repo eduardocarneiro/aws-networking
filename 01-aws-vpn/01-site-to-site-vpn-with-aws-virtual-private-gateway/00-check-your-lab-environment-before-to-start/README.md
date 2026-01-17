@@ -15,14 +15,15 @@ In my case I am based in Brazil and I use 'Claro' as service provider. Here we h
     <li><a href="#step-2">Create an EC2 Instance in your default AWS VPC</a></li>
     <li><a href="#step-3">Open the IPsec port in your router</a></li>
     <ul>
-      <li><a href="#step-4">Open the port 500 and forward it to VPN Server </a></li>
+      <li><a href="#step-4">Open the port 500 and forward it to VPN Server</a></li>
     </ul>
     <li><a href="#step-5">Setup UDP Listener on VPN Server</a></li>
     <ul>
       <li><a href="#step-6">Create an UDP Python service</a></li>
       <li><a href="#step-7">Run your service</a></li>
     </ul>
-    <li><a href="#step-8">Execute Connectivity Test</a></li>
+    <li><a href="#step-8">Test the Connection</a></li>
+    <li><a href="#step-9">Result on VPN Server</a></li>
 </ol>
 </details>
 
@@ -31,7 +32,7 @@ In my case I am based in Brazil and I use 'Claro' as service provider. Here we h
 
 <h2 id="step-1">1. Study case</h2>
 
-The first step is access your router or your service provider router and check if in your WAN port you have a public IP.
+The first step is access your router and check if in your WAN port you have a public IP.
 
     if yes: 
         continue reading this 
@@ -61,8 +62,8 @@ Deploy a small EC2 instance (e.g., t2.micro) within your **Default VPC**. This i
 
 ---
 
-<h2 id="step-3">3. Router Configuration (Claro)</h2>
-
+<h2 id="step-3">3. Open the IPsec port in your router</h2>
+<h3 id="step-4">Open the port 500 and forward it to VPN Server</h3>
 Access your service provider router (my case at `192.168.0.1`) and navigate to the **Port Forwarding / Virtual Server** section.
 
 <table>
@@ -84,7 +85,7 @@ Access your service provider router (my case at `192.168.0.1`) and navigate to t
   </tr>
   <tr>
     <td><b>Target IP</b></td>
-    <td>192.168.0.2 (Your Internal Gateway)</td>
+    <td>192.168.0.14 (Your VPN Server)</td>
   </tr>
 </table>
 
@@ -110,11 +111,12 @@ My router TP-Link DECO example:
 
 ---
 
-<h2 id="step-5">5. VPN Server Setup</h2>
+<h2 id="step-5">5. Setup UDP Listener on VPN Server</h2>
 
 On the final destination server, we will run a simple Python script to listen for incoming packets to verify the path is open.
 
-### A. Create the UDP Python Service
+<h3 id="step-6">Create the UDP Python Service</h3>
+
 Create a file named `vpn_test.py`:
 
 <pre style="background-color: #2d2d2d; color: #ccc; border-radius: 5px; padding: 15px;">
@@ -133,20 +135,27 @@ sock.bind((UDP_IP, UDP_PORT))
     <span style="color: #66d9ef;">print</span>(<span style="color: #e6db74;">f"Received message: {data} from {addr}"</span>)
 </pre>
 
-### B. Run the Service
-```bash
-# You may need sudo as port 500 is a privileged port
-sudo python3 vpn_test.py
+<h3 id="step-7">Run the Service</h3> 
 
-<h2 id="step-6">6. Test the Connection</h2>
+    [root@vpn-a ~]# sudo python3 vpn_test.py
+
+<h2 id="step-8">6. Test the Connection</h2>
 
 Log in to your AWS EC2 instance and send a test packet toward your Claro Router's Public IP.
+     
+    ubuntu@ip-172-x-x-x:~$ echo "test aws" | nc -uv public-ip 500
 
-<pre style="background-color: #f4f4f4; border-left: 5px solid #007bff; padding: 10px;"> <code>
-Use NC (Netcat) to send a UDP packet
 
-echo "VPN_TEST_PACKET" | nc -u -w1 [YOUR_CLARO_PUBLIC_IP] 500 </code> </pre>
+Success Criteria: If the configuration is correct, you will see the message "Received message: b'VPN_TEST_PACKET'" appear in your VPN server's Python console.
 
-    Success Criteria: If the configuration is correct, you will see the message "Received message: b'VPN_TEST_PACKET'" appear in your VPN server's Python console.
+<h2 id="step-9">6. Result on VPN Server</h2>
 
-<div align="center"> <i>Generated for Network Debugging Documentation • 2026</i> </div>
+	  [root@vpn-a ~]# python service.py 
+	  UDP server listening on 0.0.0.0:500
+	  Received message: X from ('192.168.0.14', 45987)
+	  Received message: X from ('192.168.0.14', 45987)
+	  Received message: X from ('192.168.0.14', 45987)
+	  Received message: X from ('192.168.0.14', 45987)
+	  Received message: X from ('192.168.0.14', 45987)
+	  Received message: test aws
+	   from ('192.168.0.14', 46127)
