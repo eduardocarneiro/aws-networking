@@ -41,10 +41,10 @@ The first step is access your router or your service provider router and check i
 From AWS documentation, what we need to do is something like the picture below to sucssefully has a IPsec VPN site-to-site, from your AWS account to your environment using StrongSwan from your side.
 
 AWS Diagram:
-<img src="./assets/aws-vpn-diagram.png" alt="AWS VPN Diagram">
+<img src="./aws-vpn-diagram.png" alt="AWS VPN Diagram">
 
 My LAB:
-<img src="./assets/my-lab-diagram.png" alt="My VMware LAB Diagram">
+<img src="./my-lab-diagram.png" alt="My VMware LAB Diagram">
 ---
 
 <h2 id="step-2">2. Create an EC2 Instance in your default AWS VPC</h2>
@@ -56,7 +56,7 @@ Deploy a small EC2 instance (e.g., t2.micro) within your **Default VPC**. This i
     <li><b>Public IP:</b> Note the Elastic IP or Public IPv4 of this instance.</li>
 </ul>
 
-<img src="./assets/aws-ec2.png" alt="Print of an EC2 image instance on AWS Cloud">
+<img src="./aws-ec2.png" alt="Print of an EC2 image instance on AWS Cloud">
 
 ---
 
@@ -91,27 +91,27 @@ My router TP-Link DECO example:
 <div style="display: flex; flex-direction: row; flex-wrap: nowrap; gap: 10px; justify-content: space-between;">
     <div style="position: relative; width: 16%;">
         <div style="position: absolute; top: 4px; left: 4px; background-color: #232f3e; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; z-index: 1;">01</div>
-        <img src="./assets/router-screen1.png" alt="Screen 1" style="width: 100%; border-radius: 5px; display: block;">
+        <img src="./router-screen1.png" alt="Screen 1" style="width: 100%; border-radius: 5px; display: block;">
     </div>
     <div style="position: relative; width: 16%;">
         <div style="position: absolute; top: 4px; left: 4px; background-color: #232f3e; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; z-index: 1;">02</div>
-        <img src="./assets/router-screen2.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;">
+        <img src="./router-screen2.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;">
     </div>
     <div style="position: relative; width: 16%;">
         <div style="position: absolute; top: 4px; left: 4px; background-color: #232f3e; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; z-index: 1;">03</div>
-        <img src="./assets/router-screen3.png" alt="Screen 3" style="width: 100%; border-radius: 5px; display: block;">
+        <img src="./router-screen3.png" alt="Screen 3" style="width: 100%; border-radius: 5px; display: block;">
     </div>
     <div style="position: relative; width: 16%;">
         <div style="position: absolute; top: 4px; left: 4px; background-color: #232f3e; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; z-index: 1;">04</div>
-        <img src="./assets/router-screen4.png" alt="Screen 4" style="width: 100%; border-radius: 5px; display: block;">
+        <img src="./router-screen4.png" alt="Screen 4" style="width: 100%; border-radius: 5px; display: block;">
     </div>
     <div style="position: relative; width: 16%;">
         <div style="position: absolute; top: 4px; left: 4px; background-color: #232f3e; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; z-index: 1;">05</div>
-        <img src="./assets/router-screen5.png" alt="Screen 5" style="width: 100%; border-radius: 5px; display: block;">
+        <img src="./router-screen5.png" alt="Screen 5" style="width: 100%; border-radius: 5px; display: block;">
     </div>
     <div style="position: relative; width: 16%;">
         <div style="position: absolute; top: 4px; left: 4px; background-color: #232f3e; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; z-index: 1;">06</div>
-        <img src="./assets/router-screen6.png" alt="Screen 6" style="width: 100%; border-radius: 5px; display: block;">
+        <img src="./router-screen6.png" alt="Screen 6" style="width: 100%; border-radius: 5px; display: block;">
     </div>
 </div>
 
