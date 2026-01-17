@@ -146,7 +146,7 @@ Log in to your AWS EC2 instance and send a test packet toward your Claro Router'
     ubuntu@ip-172-x-x-x:~$ echo "test aws" | nc -uv public-ip 500
 
 
-Success Criteria: If the configuration is correct, you will see the message "Received message: b'VPN_TEST_PACKET'" appear in your VPN server's Python console.
+Success Criteria: If the configuration is correct, you will see the message "Received message"
 
 <h2 id="step-9">6. Result on VPN Server</h2>
 
