@@ -1,4 +1,4 @@
-# VPN Port Connectivity Troubleshooting: Claro Network
+# Check your Environment before to start IPsec AWS VPN site-to-site
 
 This guide provides a systematic approach to testing if **IPSEC** ports is successfully traversing your internet service provider. 
 
@@ -42,10 +42,10 @@ The first step is access your router and check if in your WAN port you have a pu
 From AWS documentation, what we need to do is something like the picture below to sucssefully has a IPsec VPN site-to-site, from your AWS account to your environment using StrongSwan from your side.
 
 AWS Diagram:
-<img src="./aws-vpn-diagram.png" alt="AWS VPN Diagram">
+<img src="./images/aws-vpn-diagram.png" alt="AWS VPN Diagram">
 
 My LAB:
-<img src="./my-lab-diagram.png" alt="My VMware LAB Diagram">
+<img src="./images/my-lab-diagram.png" alt="My VMware LAB Diagram">
 
 
 --- 
@@ -58,7 +58,7 @@ Deploy a small EC2 instance (e.g., t2.micro) within your **Default VPC**. This i
     <li><b>Public IP:</b> Note the Elastic IP or Public IPv4 of this instance.</li>
 </ul>
 
-<img src="./aws-ec2.png" alt="Print of an EC2 image instance on AWS Cloud">
+<img src="./images/aws-ec2.png" alt="Print of an EC2 image instance on AWS Cloud">
 
 ---
 
@@ -100,12 +100,12 @@ My router TP-Link DECO example:
     <th>06</th>  
   </tr>
   <tr>
-    <td><img src="./router-screen1.png" alt="Screen 1" style="width: 100%; border-radius: 5px; display: block;"></td>
-    <td><img src="./router-screen2.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
-    <td><img src="./router-screen3.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
-    <td><img src="./router-screen4.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
-    <td><img src="./router-screen5.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
-    <td><img src="./router-screen6.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
+    <td><img src="./images/router-screen1.png" alt="Screen 1" style="width: 100%; border-radius: 5px; display: block;"></td>
+    <td><img src="./images/router-screen2.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
+    <td><img src="./images/router-screen3.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
+    <td><img src="./images/router-screen4.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
+    <td><img src="./images/router-screen5.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
+    <td><img src="./images/router-screen6.png" alt="Screen 2" style="width: 100%; border-radius: 5px; display: block;"></td>
   </tr>
 </table>
 
