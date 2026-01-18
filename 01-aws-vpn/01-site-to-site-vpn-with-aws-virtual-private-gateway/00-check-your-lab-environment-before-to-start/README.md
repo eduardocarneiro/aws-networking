@@ -42,6 +42,7 @@ The first step is access your router and check if in your WAN port you have a pu
 From AWS documentation, what we need to do is something like the picture below to sucssefully has a IPsec VPN site-to-site, from your AWS account to your environment using StrongSwan from your side.
 
 AWS Diagram:
+
 <img src="./images/aws-vpn-diagram.png" alt="AWS VPN Diagram">
 
 My LAB:
