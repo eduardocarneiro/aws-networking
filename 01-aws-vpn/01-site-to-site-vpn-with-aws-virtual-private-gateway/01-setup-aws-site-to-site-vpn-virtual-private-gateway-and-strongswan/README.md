@@ -106,5 +106,3 @@ This is a step-by-step used to deploy a AWS Site-to-Site IPSec VPN using Virtual
 								→ click "Download"
 
 <h3 id="step-2e">e. Update "Route table" with your On-Premise network</h3>
-
-    

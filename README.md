@@ -41,6 +41,8 @@ Welcome to the study guide on AWS Networking. This index serves as a roadmap for
     <li><a href="https://www.youtube.com/watch?v=VRTC0tfNc6I"><b>YouTube:</b> 02. AWS Site-to-Site VPN Setup Using StrongSwan Gateway</a></li>
     <li><a href="https://aws.amazon.com/documentation-overview/vpn/"><b>AWS:</b> AWS Virtual Private Network Documentation</a></li>
     <li><a href="https://github.com/aws-samples/vpn-gateway-strongswan"><b>GitHub:</b> VPN Gateway Stack Using strongSwan</a></li>
+    <li><a href="https://aws-deployments.hashnode.dev/aws-site-to-site-vpn-setup-using-strongswan-gateway#heading-3-configure-strongswan-on-linux-vm"><b>Tutorial: AWS Site-to-Site VPN Setup Using StrongSwan Gateway</b> </a></li>
+    
 </ul>
 
 ---
