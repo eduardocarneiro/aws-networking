@@ -40,14 +40,14 @@ This is a step-by-step used to deploy a AWS Site-to-Site IPSec VPN using Virtual
             <li><a href="#step-3h">Restart IPsec service</a></li>
             <li><a href="#step-3i">Check the IPsec VPN services</a></li>
         </ul>
-       <a href="step-4"><b>04. Create a VPN setup from On-premise side</b></a>
+       <a href="step-4"><b>04. Try the VPN connection</b></a>
         <ul>
-            <li><a href="#step-4a">Install your Linux (AlmaLinux 9.6)</a></li>
-            <li><a href="#step-4b">Install Strongswan (LibreSwan) [1]</a></li>
-            <li><a href="#step-4c">Enable "IP Forward"</a></li>
+            <li><a href="#step-4a">Create a new AWS EC2 instance</a></li>
+            <li><a href="#step-4b">Update The Security Group</a></li>
+            <li><a href="#step-4c">Make some connection test</a></li>
             <ul>
-                <li><a href="#step-4c">Enable "IP Forward"</a></li>
-                <li><a href="#step-4c">Enable "IP Forward"</a></li>
+                <li><a href="#step-4c">From AWS to On-Premise</a></li>
+                <li><a href="#step-4c">From On-Premise to AWS</a></li>
             </ul>
 </ul>
 </details>
