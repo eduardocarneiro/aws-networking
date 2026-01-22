@@ -15,10 +15,10 @@ This is a step-by-step used to deploy a AWS Site-to-Site IPSec VPN using Virtual
         <a href="step-1"><b>01. Overview of On-Premise environment</b></a>
         <ul>
             <li><a href="#step-1a">On-premise Diagram</a></li>
-			<li><a href="#step-1b">Setup your Service Provider Router</a></li>
-            <li><a href="#step-1c">Setup Global GW router</a></li>
-            <li><a href="#step-1d">Setup Local GW router</a></li>
-			<li><a href="#step-1e">On-Premise and AWS Diagram</a></li>
+			<li><a href="#step-1b">On-Premise and AWS Diagram</a></li>
+			<li><a href="#step-1c">Setup your Service Provider Router</a></li>
+            <li><a href="#step-1d">Setup Global GW router</a></li>
+            <li><a href="#step-1e">Setup Local GW router</a></li>
         </ul>
         <a href="step-2"><b>02. Create a VPN Setup from AWS side</b></a>
         <ul>
@@ -59,7 +59,11 @@ This is a step-by-step used to deploy a AWS Site-to-Site IPSec VPN using Virtual
 The picture below shows how is the On-premise environment used in this LAB.
 <img src="./images/onpremise-environment.png" alt="On-Premise environment">
 
-<h3 id="step-1b">Setup your Service Provider Router</h3>
+<h3 id="step-1b">On-Premise and AWS Diagram</h3>
+The diagram below shows the target Diagram we are going to have after we complete all steps in that article.
+<img src="./images/on-premise-and-aws.png" alt="On-Premise and AWS environment connected by VPN">
+
+<h3 id="step-1c">Setup your Service Provider Router</h3>
 
 First step to do is check if your <em>"Service Provider Router"</em> and your router provide the resources to do that:
 	* Public IP
@@ -93,7 +97,7 @@ The "circle 2" is my person router and the setup is as pictures below.
   </tr>
 </table>
 
-<h3 id="step-1c">Setup GLobal GW router</h3>
+<h3 id="step-1d">Setup GLobal GW router</h3>
 Next step is to setup what I call "Global GW router". There is a dedicated vSwitch to be router of all other LAB's inside the environment. This vSwitch has no physical port.
 
 The "Global GW router" is a Slackware Linux machine using iptables to route packages from other LAB's each other and Internet.
@@ -165,7 +169,7 @@ route add -net 192.168.39.0/24 gw 7.7.7.19
 route add -net 172.31.0.0/16 gw 192.168.0.14
 ```
 
-<h3 id="step-1d">Setup Local GW router</h3>
+<h3 id="step-1e">Setup Local GW router</h3>
 
 The GW for each LAB I call as "Local GW router". It is also a Slackware Linux machine using iptables
 This machine has 2 networks:
@@ -195,10 +199,6 @@ iptables -X -t nat
 iptables -t nat -A POSTROUTING -s 192.168.32.0/24 -o eth0 -j MASQUERADE
 iptables -t nat -A POSTROUTING -s 172.31.0.0/16 -d 192.168.32.0/24 -o eth1 -j MASQUERADE
 ```
-
-<h3 id="step-1e">On-Premise and AWS Diagram</h3>
-The diagram below shows how will be the scenario for this LAB
-<img src="./images/on-premise-and-aws.png" alt="On-Premise and AWS environment connected by VPN">
 
 <h2 id="step-2">02. Create a VPN Setup from AWS side</h2>
 <h3 id="step-2a">a. Create VPN Customer Gateway</h3>
