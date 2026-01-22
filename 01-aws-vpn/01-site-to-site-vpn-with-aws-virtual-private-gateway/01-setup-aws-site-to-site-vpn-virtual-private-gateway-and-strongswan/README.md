@@ -17,6 +17,8 @@ This is a step-by-step used to deploy a AWS Site-to-Site IPSec VPN using Virtual
             <li><a href="#step-1a">On-premise Diagram</a></li>
             <li><a href="#step-1b">Setup Global GW router</a></li>
             <li><a href="#step-1c">Setup Local GW router</a></li>
+			<li><a href="#step-1d">On-Premise and AWS Diagram</a></li>
+
         </ul>
         <a href="step-2"><b>02. Create a VPN Setup from AWS side</b></a>
         <ul>
@@ -51,6 +53,20 @@ This is a step-by-step used to deploy a AWS Site-to-Site IPSec VPN using Virtual
 </details>
 
 ---
+<h2 id="step-1">01. Overview of On-Premise environment</h2>
+
+<h3 id="step-1a">On-premise Diagram</h3>
+The picture below shows how is the On-premise environment used in this LAB.
+<img src="./images/onpremise-environment.png" alt="On-Premise environment">
+
+<h3 id="step-1b">Setup GLobal GW router</h3>
+
+
+<h3 id="step-1c">Setup Local GW router</h3>
+
+<h3 id="step-1c">On-Premise and AWS Diagram</h3>
+The diagram below shows how will be the scenario for this LAB
+<img src="./images/on-premise-and-aws.png" alt="On-Premise and AWS environment connected by VPN">
 
 <h2 id="step-2">02. Create a VPN Setup from AWS side</h2>
 <h3 id="step-2a">a. Create VPN Customer Gateway</h3>
