@@ -810,9 +810,9 @@ default via 192.168.0.3 dev ens192 proto static metric 100
 
 <img src="./images/security-group-ec2-instance.png" alt="Security Group for EC2 Instance">
 
-<h3 id="step-4a">Make some connection test</h3>
+<h3 id="step-4b">Make some connection test</h3>
 
-<h4 id="step-4a">From AWS to On-Premise</h4>
+<h4 id="step-4c">From AWS to On-Premise</h4>
 
 * Tests from EC2 Instance to VPN server
 
@@ -874,7 +874,7 @@ SSH-2.0-OpenSSH_X.X
 
 ```
 
-<h4 id="step-4a">From On-Premise to AWS</h4>
+<h4 id="step-4d">From On-Premise to AWS</h4>
 
 * Tests from VPN server to AWS EC2 Instance
 
