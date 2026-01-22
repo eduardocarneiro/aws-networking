@@ -105,6 +105,10 @@ Below you can see the "iptables" configuration
 
 Some details to explain:
 
+This machine has 2 networks:
+	* <b>eth0:</b> IP: 192.168.0.2 - Connected to vSwitch "LAN"
+	* <b>eth1:</b> IP: 7.7.7.254 - Connected to vSwitch "GW"
+
 * The line "iptables -t nat -A POSTROUTING -s 172.31.0.0/16 -d 192.168.32.0/24 -o eth1 -j MASQUERADE". Is doing a MASQUERADE from the AWS VPC network to LAB network "192.168.32.0/24" . If you want your AWS access any other LAB, one step is to include a similar iptables rule changing the destination network "-d 192.168.32.0/24", for example to "-d 192.168.30.0/24" 
 
 ```bash
@@ -163,7 +167,34 @@ route add -net 172.31.0.0/16 gw 192.168.0.14
 
 <h3 id="step-1d">Setup Local GW router</h3>
 
+The GW for each LAB I call as "Local GW router". It is also a Slackware Linux machine using iptables
+This machine has 2 networks:
+	* <b>eth0:</b> IP: 7.7.7.12 - Connected to vSwitch "GW"
+	* <b>eth1:</b> IP: 192.168.32.254 - Connected to vSwitch "K8S"
 
+The picture, there is "red cicle" to show what is the "Local GW router"
+<img src="./images/setup-local-gw-router.png" alt="Local GW router machine">
+
+The iptables configuration:
+
+```bash
+root@gw:~# cat /etc/rc.d/rc.firewall 
+#!/bin/bash 
+
+# enable ip_forwarding
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+# flush iptables rules
+iptables -F
+iptables -X
+
+iptables -F -t nat
+iptables -X -t nat
+
+## enable masquerade
+iptables -t nat -A POSTROUTING -s 192.168.32.0/24 -o eth0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 172.31.0.0/16 -d 192.168.32.0/24 -o eth1 -j MASQUERADE
+```
 
 <h3 id="step-1e">On-Premise and AWS Diagram</h3>
 The diagram below shows how will be the scenario for this LAB
