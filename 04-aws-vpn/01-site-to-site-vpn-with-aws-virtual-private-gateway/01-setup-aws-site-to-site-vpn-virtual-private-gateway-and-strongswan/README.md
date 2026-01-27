@@ -71,7 +71,7 @@ First step to do is check if your <em>"Service Provider Router"</em> and your ro
 	* Port Forward
 	* IPsec Port allowed
 
-To check your environment you can try the article <a href="./01-aws-vpn/01-site-to-site-vpn-with-aws-virtual-private-gateway/00-check-your-lab-environment-before-to-start/README.md">00. Check your LAB environment before to start</a>
+To check your environment you can try the article <a href="./04-aws-vpn/01-site-to-site-vpn-with-aws-virtual-private-gateway/00-check-your-lab-environment-before-to-start/README.md">00. Check your LAB environment before to start</a>
 
 Next step is setup your <em>"Service Provider Router"</em>, in my case I use my "service provider as a modem". 
 
