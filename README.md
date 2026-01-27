@@ -17,15 +17,15 @@ Welcome to the study guide on AWS Networking. This index serves as a roadmap for
             <li><a href="./02-aws-ipam/README.md">02. Amazon VPC IP Address Manager</a></li>
             <li><a href="./03-aws-private-link/README.md">03. AWS Private Link</a></li>
             <li><a href="./04-aws-transit-gateway/README.md">04. AWS Transit Gateway</a></li>
-            <li><a href="./05-aws-transit-gateway/README.md">05. Network Manager</a></li>
+            <li><a href="./05-aws-network-manager/README.md">05. Network Manager</a></li>
             <li><a href="./06-aws-vpc-lattice/README.md">06. Amazon VPC Lattice</a></li>
         </ul>
-        <a href="#02-aws-route53"><b>02. Amazon Route 53</b></a><ul></ul>
-        <a href="#03-aws-elb"><b>03. AWS Elastic Load Balancing - ELB</b></a><br>
+        <a href="#02-aws-route53/README.md"><b>02. Amazon Route 53</b></a><ul></ul>
+        <a href="#03-aws-elb/README.md"><b>03. AWS Elastic Load Balancing - ELB</b></a><br>
         <ul>
-            <li><a href="./03-aws-elb/alb/README.md">01. Application Load Balancer - ALB</a></li>
-            <li><a href="./03-aws-elb/nlb/README.md">02. Network Load Balancer - NLB</a></li>
-            <li><a href="./03-aws-elb/glb/README.md">03. Gateway Load Balancer - GLB</a></li>
+            <li><a href="./03-aws-elb/01-alb/README.md">01. Application Load Balancer - ALB</a></li>
+            <li><a href="./03-aws-elb/02-nlb/README.md">02. Network Load Balancer - NLB</a></li>
+            <li><a href="./03-aws-elb/03-glb/README.md">03. Gateway Load Balancer - GLB</a></li>
         </ul>
         <a href="#04-aws-vpn"><b>04. AWS Virtual Private Network - VPN</b></a>
         <ul>
