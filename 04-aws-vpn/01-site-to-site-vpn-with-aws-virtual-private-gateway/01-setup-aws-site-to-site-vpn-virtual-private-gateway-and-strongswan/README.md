@@ -308,8 +308,8 @@ MASQUERADE  all  --  172.31.0.0/16        192.168.32.0/24
 
     		AWS console
 			→ search "vpc"
-				→ click "customer gateway" on VPC session
-					→ click "new customer gateway"
+				→ select "your vpc"	
+					→ click "customer gateway" on VPC session
 						→ click "Create customer gateway"
 							Name tag: "your customer gateway name"
 							IP address: "your on-premise public IP"
