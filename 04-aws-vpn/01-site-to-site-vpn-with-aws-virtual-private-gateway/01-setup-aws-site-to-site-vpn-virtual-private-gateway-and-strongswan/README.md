@@ -308,24 +308,24 @@ MASQUERADE  all  --  172.31.0.0/16        192.168.32.0/24
 
     		AWS console
 			→ search "vpc"
-				→ select "your vpc"	
-					→ click "customer gateway" on VPC session
-						→ click "Create customer gateway"
-							Name tag: "your customer gateway name"
-							IP address: "your on-premise public IP"
-							click "create custome gateway"
+				→ click "customer gateway" on VPC session
+					→ click "Create customer gateway"
+						Name tag: "your customer gateway name"
+						IP address: "your on-premise public IP"
+						click "create custome gateway"
 
 <h3 id="step-2b">b. Create VPN Virtual Private Gateway</h3>
 
     		AWS console
-			→ search "vpc"
+			→ search "vpc"	
 				→ click "virtual private gateway" on VPC session
-					Name tag: "your virtual privat gateway name"
-					click "create virtual private gateway"
+					→ click "create virtual private gateway"
+						Name tag: "your virtual privat gateway name"
+						click "create virtual private gateway"
 				→ select "your virtual private gateway" 
 				→ click "actions"
 					→ click "Attach to VPC"
-						choose "your VPN"
+						choose "your VPC"
 							→ click "Attach to VPC"
 
 <h3 id="step-2c">c. Create VPN Connection</h3>
