@@ -348,14 +348,14 @@ MASQUERADE  all  --  172.31.0.0/16        192.168.32.0/24
 
     		aws console
 			→ search "vpc"
-					→ select "your vpn connection"
-						→ click "in your VPN ID"
-							→ click "Download configuration"
-								Vendor: "Strongswan"
-								Platform: "Ubuntu 16.04"
-								Software: "Strongswan 5.5.1+"
-								IKE version: "ikev2"
-								→ click "Download"
+				→ click "Siste-to-Site VPN connections"
+					→ select "your VPN ID"
+						→ click "Download configuration"
+							Vendor: "Strongswan"
+							Platform: "Ubuntu 16.04"
+							Software: "Strongswan 5.5.1+"
+							IKE version: "ikev1"
+							→ click "Download"
 
 <h3 id="step-2e">e. Update "Route table" with your On-Premise network</h3>
 
