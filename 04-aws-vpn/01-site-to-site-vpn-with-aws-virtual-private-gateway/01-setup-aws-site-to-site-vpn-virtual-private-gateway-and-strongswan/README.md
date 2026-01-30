@@ -361,13 +361,15 @@ MASQUERADE  all  --  172.31.0.0/16        192.168.32.0/24
 
 			aws console
 			→ search "vpc"
-				→ click on "Route table ID "
-					→ click "Edit routes" in "Routes" tab
-						→ click "Add route"
-							Destination: "192.168.32.0/24"
-							Target: "Virtual Private Gateway"
-							choose: "Your vgw-xxxx-id"
-							→ click "Save changes"
+				→ click on "Route table"
+					→ select your "Route table ID "
+						→ click "Actions"
+							→ select "Edit routes"
+								→ click "Add route"
+									Destination: "192.168.32.0/24"
+									Target: "Virtual Private Gateway"
+									choose: "Your vgw-xxxx-id"
+									→ click "Save changes"
 
 <img src="./images/vpc-route-table.png" alt="Route table">
 
