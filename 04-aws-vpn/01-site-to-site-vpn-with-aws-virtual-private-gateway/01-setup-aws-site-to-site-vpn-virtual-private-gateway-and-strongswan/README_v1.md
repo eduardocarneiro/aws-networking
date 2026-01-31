@@ -132,11 +132,7 @@ iptables -X -t nat
 
 # enable masquerade
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-#iptables -t nat -A POSTROUTING -s 172.31.0.0/16 -d 192.168.32.0/24 -o eth1 -j MASQUERADE
-
-# enable forward aws network
-iptables -A FORWARD -s 172.31.0.0/16 -d 192.168.32.0/24 -j ACCEPT
-iptables -A FORWARD -s 192.168.32.0/24 -d 172.31.0.0/16 -j ACCEPT
+iptables -t nat -A POSTROUTING -s 172.31.0.0/16 -d 192.168.32.0/24 -o eth1 -j MASQUERADE
 
 # adding routes
 
@@ -213,18 +209,6 @@ default via 192.168.0.3 dev eth0
 192.168.38.0/24 via 7.7.7.18 dev eth1 
 192.168.39.0/24 via 7.7.7.19 dev eth1 
 
-root@gw:~# iptables -L 
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain FORWARD (policy ACCEPT)
-target     prot opt source               destination         
-ACCEPT     all  --  172.31.0.0/16        192.168.32.0/24     
-ACCEPT     all  --  192.168.32.0/24      172.31.0.0/16       
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination         
-
 root@gw:~# iptables -L -t nat
 Chain PREROUTING (policy ACCEPT)
 target     prot opt source               destination         
@@ -238,6 +222,7 @@ target     prot opt source               destination
 Chain POSTROUTING (policy ACCEPT)
 target     prot opt source               destination         
 MASQUERADE  all  --  anywhere             anywhere            
+MASQUERADE  all  --  172.31.0.0/16        192.168.32.0/24     
 
 ```
 
@@ -254,7 +239,7 @@ The picture, there is "red cicle" to show what is the "Local GW router"
 The iptables configuration:
 
 ```bash
-root@gw:~# cat /etc/rc.d/rc.firewall
+root@gw:~# cat /etc/rc.d/rc.firewall 
 #!/bin/bash 
 
 # enable ip_forwarding
@@ -267,17 +252,9 @@ iptables -X
 iptables -F -t nat
 iptables -X -t nat
 
-## Enable Masquerade
+## enable masquerade
 iptables -t nat -A POSTROUTING -s 192.168.32.0/24 -o eth0 -j MASQUERADE
-
-## Roteador (Permissivo) - Política padrão ACCEPT 
-iptables -A FORWARD -j ACCEPT
-
-## Garante que pacotes de conexões já estabelecidas continuem passando
-iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
-
-## Rota AWS
-ip route add 172.31.0.0/16 via 7.7.7.254
+iptables -t nat -A POSTROUTING -s 172.31.0.0/16 -d 192.168.32.0/24 -o eth1 -j MASQUERADE
 ```
 
 * IP's, iptables rules and route table
@@ -307,20 +284,7 @@ root@gw:~# ip route show
 default via 7.7.7.254 dev eth0 
 7.7.7.0/24 dev eth0 proto kernel scope link src 7.7.7.12 
 127.0.0.0/8 dev lo scope link 
-172.31.0.0/16 via 7.7.7.254 dev eth0 
 192.168.32.0/24 dev eth1 proto kernel scope link src 192.168.32.254 
-
-root@gw:~# iptables -L
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain FORWARD (policy ACCEPT)
-target     prot opt source               destination         
-ACCEPT     all  --  anywhere             anywhere            
-ACCEPT     all  --  anywhere             anywhere             state RELATED,ESTABLISHED
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination         
 
 root@gw:~# iptables -L -t nat
 Chain PREROUTING (policy ACCEPT)
@@ -335,6 +299,8 @@ target     prot opt source               destination
 Chain POSTROUTING (policy ACCEPT)
 target     prot opt source               destination         
 MASQUERADE  all  --  192.168.32.0/24      anywhere            
+MASQUERADE  all  --  172.31.0.0/16        192.168.32.0/24     
+
 ```
 
 <h2 id="step-2">02. Create a VPN Setup from AWS side</h2>
@@ -505,14 +471,39 @@ University of Applied Sciences Rapperswil, Switzerland
 #
 # see 'man ipsec.conf' and 'man pluto' for more information
 #
-# For example configurations and documentation,see https://libreswan.org/wiki/
+# For example configurations and documentation, see https://libreswan.org/wiki/
 
 config setup
+	# If logfile= is unset, syslog is used to send log messages too.
+	# Note that on busy VPN servers, the amount of logging can trigger
+	# syslogd (or journald) to rate limit messages.
 	logfile=/var/log/pluto.log
+	# 
+	# Debugging should only be used to find bugs, not configuration issues!
+	# "base" regular debug, "tmi" is excessive (!) and "private" will log
+	# sensitive key material (not available in FIPS mode). The "cpu-usage"
+	# value logs timing information and should not be used with other
+	# debug options as it will defeat getting accurate timing information.
+	# Default is "none"
 	plutodebug="base"
+	# plutodebug="tmi"
+	#plutodebug="none"
+	#
+	# Some machines use a DNS resolver on localhost with broken DNSSEC
+	# support. This can be tested using the command:
+	# dig +dnssec DNSnameOfRemoteServer
+	# If that fails but omitting '+dnssec' works, the system's resolver is
+	# broken and you might need to disable DNSSEC.
+	# dnssec-enable=no
+	#
+	# To enable IKE and IPsec over TCP for VPN server. Requires at least
+	# Linux 5.7 kernel or a kernel with TCP backport (like RHEL8 4.18.0-291)
+	# listen-tcp=yes
+	# To enable IKE and IPsec over TCP for VPN client, also specify
+	# tcp-remote-port=4500 in the client's conn section.
 	uniqueids=no
 
-# if it exists,include system wide crypto-policy defaults
+# if it exists, include system wide crypto-policy defaults
 include /etc/crypto-policies/back-ends/libreswan.config
 
 # It is best to add your IPsec connections as separate files
@@ -521,55 +512,69 @@ include /etc/ipsec.d/*.conf
 
 conn Tunnel1
 	auto=start
+	#left=%defaultroute
+	#leftid=186.x.x.x
 	left=192.168.0.14
 	leftid=186.x.x.x
-	rightid=54.233.x.x
-	right=54.233.x.x
+	right=15.229.x.x
 	type=tunnel
+	#leftauth=psk
+	#rightauth=psk
 	authby=secret
 	keyexchange=ike
-    ikev2=insist
-    ike=aes256-sha2_256;modp2048
-    esp=aes256-sha2_256
-	narrowing=no
+        ikev2=insist
+        #ike=aes256-sha2_256;modp2048
+        #esp=aes256-sha2_256
+	ike=aes128-sha1-modp2048
 	ikelifetime=8h
+	esp=aes128-sha1-modp2048
 	lifetime=1h
 	keyingtries=%forever
-	leftsubnet=0.0.0.0/0
-	rightsubnet=0.0.0.0/0
+	leftsubnet=192.168.0.0/18
+	rightsubnet=172.31.0.0/16
+	#leftsubnet=0.0.0.0/0
+	#rightsubnet=0.0.0.0/0
 	dpddelay=10s
-    retransmit-timeout=5s
+        retransmit-timeout=5s
 	dpdaction=restart
-    vti-interface=Tunnel1
-	fragmentation=yes
+	## Please note the following line assumes you only have two tunnels in your Strongswan configuration file. This "mark" value must be unique and may need to be changed based on other entries in your configuration file.
 	mark=100/0xffffffff
-	leftupdown="/etc/ipsec.d/aws-updown.sh -ln Tunnel1 -ll 169.x.x.34/30 -lr 169.x.x.33/30 -m 100 -r 172.31.0.0/16"
+	## Uncomment the following line to utilize the script from the "Automated Tunnel Healhcheck and Failover" section. Ensure that the integer after "-m" matches the "mark" value above, and <VPC CIDR> is replaced with the CIDR of your VPC
+	## (e.g. 192.168.1.0/24)
+	leftupdown="/etc/ipsec.d/aws-updown.sh -ln Tunnel1 -ll 169.x.x.18/30 -lr 169.x.x.17/30 -m 100 -r 172.31.0.0/16"
 
 
 conn Tunnel2
 	auto=start
-	left=192.168.0.14
-	leftid=186.x.x.x
-	right=56.125.x.x
-	rightid=56.125.x.x
+	#left=%defaultroute
+	#leftid=186.x.x.x
+	left=192.168.0.14 #VPN server IP. As It is behind a NAT (My service Provider router) , Need to include this parameter
+	leftid=186.x.x.x #my public IP
+	right=18.231.x.x
 	type=tunnel
+	#leftauth=psk
+	#rightauth=psk
 	authby=secret
 	keyexchange=ike
-    ikev2=insist
-    ike=aes256-sha2_256;modp2048
-    esp=aes256-sha2_256
+        ikev2=insist
+	ike=aes128-sha1-modp2048
 	ikelifetime=8h
+	esp=aes128-sha1-modp2048
 	lifetime=1h
 	keyingtries=%forever
-	leftsubnet=0.0.0.0/0
-	rightsubnet=0.0.0.0/0
+	leftsubnet=192.168.0.0/18
+	rightsubnet=172.31.0.0/16
+	#leftsubnet=0.0.0.0/0
+	#rightsubnet=0.0.0.0/0
 	dpddelay=10s
-    retransmit-timeout=5s
+        retransmit-timeout=5s
 	dpdaction=restart
-    vti-interface=Tunnel2
-	fragmentation=yes
+	## Please note the following line assumes you only have two tunnels in your Strongswan configuration file. This "mark" value must be unique and may need to be changed based on other entries in your configuration file.
 	mark=200/0xffffffff
-	leftupdown="/etc/ipsec.d/aws-updown.sh -ln Tunnel2 -ll 169.x.x.202/30 -lr 169.x.x.201/30 -m 200 -r 172.31.0.0/16"
+	## Uncomment the following line to utilize the script from the "Automated Tunnel Healhcheck and Failover" section. Ensure that the integer after "-m" matches the "mark" value above, and <VPC CIDR> is replaced with the CIDR of your VPC
+	## (e.g. 192.168.1.0/24)
+	leftupdown="/etc/ipsec.d/aws-updown.sh -ln Tunnel2 -ll 169.x.x.210/30 -lr 169.x.x.209/30 -m 200 -r 172.31.0.0/16"
+
 ```
 
 <h3 id="step-3e">Create "/etc/ipsec.secrets" file</h3>
@@ -578,8 +583,8 @@ conn Tunnel2
 [root@vpn-a ~]# cat /etc/ipsec.secrets 
 include /etc/ipsec.d/*.secrets
 
-186.x.x.x 54.233.x.x : PSK "m..ws0O1OqOe_MzCx2WQjaJWRq_FouC3"
-186.x.x.x 56.125.x.x : PSK ".rFL4KsRA7d4RkTqCt26j4XOFHni8laV"
+186.x.x.x 15.229.x.x : PSK "mLVws0OsOqOe_MzCx2WQjaJWTq_FuuC3"
+186.x.x.x 18.231.x.x : PSK "SVFLIKsjAUdqlkTqCqA6j4XOFHni8laV"
 ```
 
 <h3 id="step-3f">Restart IPsec service</h3>
@@ -595,9 +600,8 @@ include /etc/ipsec.d/*.secrets
 <h3 id="step-3g">Create HealthCheck script "/etc/ipsec.d/aws-updown.sh"</h3>
 
 ```bash
-[root@vpn-a ~]# cat /etc/ipsec.d/aws-updown.sh
+[root@vpn-a ~]# cat /etc/ipsec.d/aws-updown.sh 
 #!/bin/bash
-exec 2>>/var/log/aws-updown.log; set -x
 
 while [[ $# > 1 ]]; do
 	case ${1} in
@@ -655,7 +659,7 @@ add_route() {
 	    ip route add ${i} dev ${TUNNEL_NAME} metric ${TUNNEL_MARK} src 192.168.0.14
 	done
 	# add your on-premise routes here
-	ip route add 192.168.32.0/24 via 192.168.0.2 dev ens192 2>/dev/null || true
+	ip route add 192.168.32.0/24 via 192.168.0.2 dev ens192
 	#iptables -t mangle -A FORWARD -o ${TUNNEL_NAME} -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 	#iptables -t mangle -A INPUT -p esp -s ${TUNNEL_REMOTE_ENDPOINT} -d ${TUNNEL_LOCAL_ENDPOINT} -j MARK --set-xmark ${TUNNEL_MARK}
 	#ip route flush table 220
@@ -682,23 +686,18 @@ command_exists ip || echo "ERROR: ip command is required to execute the script, 
 command_exists iptables || echo "ERROR: iptables command is required to execute the script, check if you are running as root, mostly to do with path, /sbin/" >&2 2>&2
 command_exists sysctl || echo "ERROR: sysctl command is required to execute the script, check if you are running as root, mostly to do with path, /sbin/" >&2 2>&2
 
-
 case "${PLUTO_VERB}" in
-    up-client|prepare-client|route-client|up-host|prepare-host|route-host)
-        echo "Performing interface creation to ${TUNNEL_NAME} with verb ${PLUTO_VERB}" >> /var/log/aws-updown.log
-        create_interface
-        configure_sysctl
-        add_route
-        ;;
-    down-client|unroute-client|down-host|unroute-host)
-        echo "Cleanup interface ${TUNNEL_NAME} with verb ${PLUTO_VERB}" >> /var/log/aws-updown.log
-        cleanup
-        delete_interface
-        ;;
-    *)
-        echo "WARNING: Verb [${PLUTO_VERB}] did nothing." >> /var/log/aws-updown.log
-        ;;
+	up-client)
+		create_interface
+		configure_sysctl
+		add_route
+		;;
+	down-client)
+		cleanup
+		delete_interface
+		;;
 esac
+
 ```
 
 <h3 id="step-3h">Restart IPsec service</h3>
@@ -775,8 +774,8 @@ esac
 ```bash 
 [root@vpn-a ~]# ip route show
 default via 192.168.0.3 dev ens192 proto static metric 100 
-169.254.41.32/30 dev Tunnel1 proto kernel scope link src 169.254.41.34 
-169.254.77.200/30 dev Tunnel2 proto kernel scope link src 169.254.77.202 
+169.254.16.208/30 dev Tunnel2 proto kernel scope link src 169.254.16.210 
+169.254.71.16/30 dev Tunnel1 proto kernel scope link src 169.254.71.18 
 172.31.0.0/16 dev Tunnel1 scope link src 192.168.0.14 metric 100 
 172.31.0.0/16 dev Tunnel2 scope link src 192.168.0.14 metric 200 
 192.168.0.0/24 dev ens192 proto kernel scope link src 192.168.0.14 metric 100 
