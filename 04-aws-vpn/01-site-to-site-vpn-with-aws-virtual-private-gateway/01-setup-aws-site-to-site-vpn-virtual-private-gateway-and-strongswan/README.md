@@ -791,7 +791,7 @@ default via 192.168.0.3 dev ens192 proto static metric 100
 					→ click on "VPN ID"
 						→ check "Tunnel details" tab
 				
-<img src="./images/vpn-connection-status-from-aws-side.png" alt="VPN Connection status from AWS status">
+<img src="./images/vpn-connection-status-from-aws-side_v2.png" alt="VPN Connection status from AWS status">
 
 
 <h2 id="step-4">04. Try the VPN connection</h2>
