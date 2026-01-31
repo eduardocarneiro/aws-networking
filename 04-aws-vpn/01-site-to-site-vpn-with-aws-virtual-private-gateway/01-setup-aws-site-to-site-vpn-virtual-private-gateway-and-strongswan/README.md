@@ -322,7 +322,7 @@ MASQUERADE  all  --  172.31.0.0/16        192.168.32.0/24
 					→ click "create virtual private gateway"
 						Name tag: "your virtual privat gateway name"
 						click "create virtual private gateway"
-				→ select "your virtual private gateway" 
+				→ select "your virtual private gateway" --- (wait the state become "Available")
 				→ click "actions"
 					→ click "Attach to VPC"
 						choose "your VPC"
