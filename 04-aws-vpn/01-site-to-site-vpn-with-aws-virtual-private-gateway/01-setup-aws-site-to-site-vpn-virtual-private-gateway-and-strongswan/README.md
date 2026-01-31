@@ -340,7 +340,7 @@ MASQUERADE  all  --  172.31.0.0/16        192.168.32.0/24
 						Customer gateway: select "Existing"
 						Customer gateway ID: select "your customer gateway"
 						Routing options: select "static"
-						Static IP prefixes: "add the static on-primese network - sample: 192.168.0.0/24" (add all you need)
+						Static IP prefixes: "add the static on-primese network - sample: 192.168.0.0/24" (add all you need. I added "192.168.32.0/24")
 						Pre-shared key storage: select "Standard"
 						Click "Create VPN connection"
 
@@ -366,7 +366,7 @@ MASQUERADE  all  --  172.31.0.0/16        192.168.32.0/24
 						→ click "Actions"
 							→ select "Edit routes"
 								→ click "Add route"
-									Destination: "192.168.32.0/24"
+									Destination: "192.168.32.0/24" --- (Also added "192.168.32.0/24")
 									Target: "Virtual Private Gateway"
 									choose: "Your vgw-xxxx-id"
 									→ click "Save changes"
