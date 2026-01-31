@@ -438,27 +438,6 @@ ALMALINUX_MANTISBT_PROJECT_VERSION="9.5"
 REDHAT_SUPPORT_PRODUCT="AlmaLinux"
 REDHAT_SUPPORT_PRODUCT_VERSION="9.5"
 SUPPORT_END=2032-06-01
-[root@vpn-a ~]# 
-[root@vpn-a ~]# cat /etc/os-release 
-NAME="AlmaLinux"
-VERSION="9.5 (Teal Serval)"
-ID="almalinux"
-ID_LIKE="rhel centos fedora"
-VERSION_ID="9.5"
-PLATFORM_ID="platform:el9"
-PRETTY_NAME="AlmaLinux 9.5 (Teal Serval)"
-ANSI_COLOR="0;34"
-LOGO="fedora-logo-icon"
-CPE_NAME="cpe:/o:almalinux:almalinux:9::baseos"
-HOME_URL="https://almalinux.org/"
-DOCUMENTATION_URL="https://wiki.almalinux.org/"
-BUG_REPORT_URL="https://bugs.almalinux.org/"
-
-ALMALINUX_MANTISBT_PROJECT="AlmaLinux-9"
-ALMALINUX_MANTISBT_PROJECT_VERSION="9.5"
-REDHAT_SUPPORT_PRODUCT="AlmaLinux"
-REDHAT_SUPPORT_PRODUCT_VERSION="9.5"
-SUPPORT_END=2032-06-01
 
 [root@vpn-a ~]# ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
